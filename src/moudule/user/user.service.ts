@@ -5,10 +5,7 @@ import { UsersRepository } from './user.repository';
 
 @Injectable()
 export class UserService {
-  constructor(public userRepository: UsersRepository) {
-    //Service is creating its own dependencies
-    //Không nên làm như thế này
-  }
+  constructor(public userRepository: UsersRepository) {}
   findOne(id: string) {
     // xử lý logic ở đây
     return this.userRepository.findOne(id);
