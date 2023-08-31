@@ -1,5 +1,6 @@
 import {
   Body,
+  ClassSerializerInterceptor,
   Controller,
   Delete,
   Get,
@@ -7,67 +8,63 @@ import {
   Param,
   Patch,
   Post,
-  Put,
-
-  // UsePipes,
-  // ValidationPipe,
+  UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { UserDTO } from './dto/user.dto';
 import { UserService } from './user.service';
+import { LoggingInterceptor } from '../../inteceptors/logging.interceptor';
+import { AuthGuard } from '../../guards/auth.guards';
 
 @Controller('api/v1/users') //đây là router
 export class UserController {
-  constructor(public userService: UserService) {
-    //DONT DO THIS ON REAL APP
-    //USE DEPENDENCY INJECTION
-  }
+  constructor(private userService: UserService) {}
 
   @Get()
-  getAllUser() {
-    console.log('all user');
+  async getAllUser() {
+    return this.userService.findAll();
   }
 
-  // @UsePipes(new ValidationPipe())
   @Post()
-  createUser(@Body() body: UserDTO) {
+  async createUser(@Body() body: UserDTO) {
     console.log('body', body);
-    //BUI VAN VU SAY HEELO
-    return {
-      data: body,
-    };
+    return this.userService.create(body);
   }
   //get
+  @UseInterceptors(ClassSerializerInterceptor)
+  @UseInterceptors(LoggingInterceptor)
+  @UseGuards(AuthGuard)
   @Get(':id')
-  getUserById(@Param('id') id: string) {
-    console.log('id', typeof id);
+  async getUserById(@Param('id') id: number) {
+    console.log('vào controller');
     try {
-      return this.userService.findOne(id as string);
+      return this.userService.findOne(id);
     } catch (error) {
       throw new NotFoundException('User not found');
     }
   }
-  // create
-
-  // put
-  @Put(':id')
-  editUser() {}
   //path
-  @Patch('id')
-  editUserById() {}
+  @Patch(':id')
+  async editUserById(@Param('id') id: number | string, @Body() body: UserDTO) {
+    try {
+      //check id not exits
+
+      //goi den service
+      return this.userService.updateById(id, body);
+    } catch (error) {
+      throw new NotFoundException('User not found');
+    }
+  }
 
   //Delete
   @Delete(':id')
-  removeUser() {}
+  removeUser(@Param('id') id: string | number) {
+    console.log('id', id);
+    return this.userService.deleteById(id);
+  }
 
   @Get('*')
   notFound() {
     return 'Not Found';
   }
 }
-
-//decorator tìm hiểu
-//tại sao lại không được làm cách trên
-//nó liên quan tới 1 khái niệm => Inversion of Control
-
-//cách giải quyết là dùng Depency Injection
-//tại sao thằng Depecy Injection tồn tại

@@ -17,16 +17,9 @@ export class ProductDTO {
   _id: string;
   @CommonDecorator(10, 20)
   name: string;
-  @IsNotEmpty()
-  image: string;
   @IsInt()
   @IsNotEmpty()
   price: number;
   @IsNotEmpty()
   description: string;
-  @IsNotEmpty()
-  @IsInt()
-  quantity: number;
-  @IsNotEmpty()
-  category: string;
 }
