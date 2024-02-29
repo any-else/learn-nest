@@ -1,4 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  // JoinColumn,
+} from 'typeorm';
 import { ProductEntity } from '../../product/db/product.entity';
 import { PostEntity } from '../../posts/db/post.entity';
 import { Exclude, Transform } from 'class-transformer';
@@ -32,7 +38,6 @@ export class UserEntity {
   @OneToMany(() => ProductEntity, (product) => product.user)
   products: ProductEntity[];
 
-  //xac dinh moi quan he voi post
   @OneToMany(() => PostEntity, (post) => post.user)
   posts: PostEntity[];
 }

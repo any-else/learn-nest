@@ -10,6 +10,12 @@ export class PostController {
   async getAllPost() {
     return this.postService.getAll();
   }
+
+  @Get('all/user')
+  async getAllPostByUser() {
+    return this.postService.getAllPostByUser();
+  }
+
   @Post()
   async createPost(@Body() body: CreatePostDto) {
     return this.postService.create(body);

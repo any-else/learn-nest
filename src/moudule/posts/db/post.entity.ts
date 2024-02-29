@@ -2,6 +2,7 @@ import {
   Column,
   Entity,
   JoinColumn,
+  // JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -25,8 +26,7 @@ export class PostEntity {
   })
   image: string;
 
-  //xac dinh moi quan he voi user
   @ManyToOne(() => UserEntity, (user) => user.posts)
-  @JoinColumn({ name: 'user_id' })
+  @JoinColumn({ name: 'users_id' })
   user: UserEntity;
 }

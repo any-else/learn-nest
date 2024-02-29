@@ -10,6 +10,6 @@ export class AuthGuard implements CanActivate {
     console.log('request', request);
     //nếu mà return true => thì sẽ  không chặn cho vào
     //nếu mà return false => thì sẽ  chặn đầu vào
-    return false;
+    return true;
   }
 }

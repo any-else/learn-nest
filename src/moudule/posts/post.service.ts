@@ -14,6 +14,16 @@ export class PostService {
   async getAll(): Promise<PostEntity[]> {
     return await this.postRepository.find();
   }
+  async getAllPostByUser(): Promise<PostEntity[]> {
+    return await this.postRepository.find({
+      relations: ['user'],
+      where: {
+        user: {
+          user_id: 1,
+        },
+      },
+    });
+  }
   //get-by-id
   async getById(id: string): Promise<PostEntity> {
     return await this.postRepository.findOneBy({
@@ -24,7 +34,8 @@ export class PostService {
   async create(body: CreatePostDto): Promise<{
     message: string;
   }> {
-    const newPost = this.postRepository.create(body);
+    const newBody = { ...body, users_id: 1 };
+    const newPost = this.postRepository.create(newBody);
     await this.postRepository.save(newPost);
     return {
       message: 'create successfully',

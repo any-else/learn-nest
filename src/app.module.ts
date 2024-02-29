@@ -14,8 +14,8 @@ import { PostModule } from './moudule/posts/post.module';
       host: 'localhost',
       port: 3306,
       username: 'root',
-      password: 'Vuvanbui@18',
-      database: 'democonnectNest',
+      password: 'vuvanbui@18',
+      database: 'demo_relation',
       entities: [UserEntity, ProductEntity, PostEntity],
       synchronize: true, //auto chay vao database
     }),

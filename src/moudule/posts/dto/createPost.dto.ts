@@ -1,12 +1,12 @@
-import { IsInt, IsNotEmpty, IsString, IsUrl } from 'class-validator';
+import { IsNotEmpty, IsString } from 'class-validator';
 
 export class CreatePostDto {
   @IsNotEmpty()
   title: string;
   @IsString()
   content: string;
-  @IsUrl()
+  // @IsUrl()
   image: string;
-  @IsInt()
+  // @IsInt()
   user_id: number;
 }
